@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>首页</title>
+    <link rel="icon" href="./favicon.ico">
+    <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css" />
+</head>
+
+<body>
+    <div id="app"
+        style="display: flex;align-items: center;justify-content: center;flex-direction:column;height: 100vh;">
+        <div>
+            <el-button type="primary" :loading="loading" round @click="fetchData">获取数据</el-button>
+        </div>
+        <div style="height: 60px;width: 500px;border-radius: 10px;background-color: gold;padding: 10px;margin-top: 50px;font-size: 24px; font-weight: bolder;"
+            v-loading="loading" element-loading-text="加载中">
+            {{data}}
+        </div>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/element-plus"></script>
+    <script src="https://unpkg.com/element-plus/dist/locale/zh-cn"></script>
+    <script>
+        const { createApp, onMounted, ref } = Vue
+        const app = createApp({
+            setup () {
+                const data = ref()
+                const loading = ref(false)
+
+                async function fetchData () {
+                    loading.value = true
+                    axios.get('/api/v1/test')
+                        .then(response => {
+                            if (response.data.code == 200) {
+                                setTimeout(() => {
+                                    data.value = response.data.data
+                                    ElementPlus.ElMessage({
+                                        message: response.data.data,
+                                        type: 'success',
+                                    })
+                                    loading.value = false
+                                }, 2000)
+                            }
+                        })
+                        .catch(error => {
+                            console.log(error)
+                        }
+                        )
+                }
+
+                onMounted(() => {
+                    fetchData()
+                })
+
+                return {
+                    data,
+                    loading,
+                    fetchData,
+                }
+            }
+        })
+        app.use(ElementPlus, {
+            locale: ElementPlusLocaleZhCn,
+        })
+        app.mount("#app")
+    </script>
+</body>
+
+</html>
