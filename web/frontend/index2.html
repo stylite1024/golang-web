@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="icon" href="./assets/images/favicon.ico">
+    <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css" />
+</head>
+
+<body>
+    <div id="app">
+        <button @click="fetchData">Fetch Data</button>
+        {{ data }}
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/element-plus"></script>
+    <script src="https://unpkg.com/element-plus/dist/locale/zh-cn"></script>
+    <script src="./api/test.js"></script>
+    <script>
+        const { createApp, onMounted, ref } = Vue
+        const app = createApp({
+            setup () {
+                const data = ref()
+                function fetchData () {
+                    axios.get('/api/v1/test')
+                        .then(response => {
+                            if(response.data.code == 200) {
+                                data.value = response.data.data
+                            }
+                        })
+                        .catch(error => {
+                            console.log(error)
+                        })
+                }
+                onMounted(() => {
+                    fetchData()
+                })
+                return {
+                    fetchData,
+                    data
+                }
+            }
+        })
+        app.use(ElementPlus, {
+            locale: ElementPlusLocaleZhCn,
+        })
+        app.mount("#app")
+    </script>
+</body>
+
+</html>

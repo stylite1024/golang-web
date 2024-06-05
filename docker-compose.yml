@@ -1,0 +1,20 @@
+version: '3'
+services:
+  go-app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: go-app:latest
+    container_name: go-app
+    restart: always
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+      - /tmp/data:/data
+    ports:
+      - "8080:8080"
+    networks:
+      - go-app
+
+networks:
+  go-app:
