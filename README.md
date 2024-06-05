@@ -12,6 +12,7 @@ iris-web is a web template based on [vue3](https://vuejs.org) and [iris](https:/
 │   └── info.go
 ├── docker-compose.yml
 ├── Dockerfile
+├── docs
 ├── go.mod
 ├── go.sum
 ├── internal
@@ -19,6 +20,7 @@ iris-web is a web template based on [vue3](https://vuejs.org) and [iris](https:/
 │   │   └── handler.go
 │   ├── logger
 │   │   └── logger.go
+│   ├── logic
 │   └── router
 │       └── router.go
 ├── LICENSE
@@ -28,6 +30,7 @@ iris-web is a web template based on [vue3](https://vuejs.org) and [iris](https:/
 │   └── util
 │       └── response.go
 ├── README.md
+├── README-zh.md
 ├── scripts
 │   └── docker-entrypoint.sh
 └── web
@@ -37,7 +40,6 @@ iris-web is a web template based on [vue3](https://vuejs.org) and [iris](https:/
     │   ├── api
     │   │   └── test.js
     │   ├── assets
-    │   │   ├── css
     │   │   ├── img
     │   │   │   └── favicon.ico
     │   │   └── js
